@@ -2,6 +2,8 @@ package MyPackage;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
@@ -10,7 +12,7 @@ public class calendarBase {
 	 * All the method/function for the calendar test.
 	 * 
 	 */
-	protected WebDriver driver;
+
 	
 	
 	//   Calendar - Element
@@ -21,6 +23,8 @@ public class calendarBase {
 	public final String ELEMENT_CHECK_TITLE_EVENT_IN_LIST=".//*[text()='Event Details']/../..//*[@class='titleList']//*[text()='${name}']";
 	public final By ELEMENT_LISTVIEW_CANCEL_BUTTON = By.xpath(".//*[@id='UIEventForm']//*[text()='Cancel']");
 	public final By ELEMENT_EDIT_RIGHTCLIKC_EVENT_INCALENDAR=By.xpath("//*[@class='uiIconPreview uiIconLightGray']");
+	public final By ELEMENT_DELETE_RIGHTCLIKC_EVENT_INCALENDAR=By.xpath("//*[@class='uiIconDelete uiIconLightGray']");
+	public final By ELEMENT_CONFIRM_DELETE_POPUP_RIGHT_CLICK=By.xpath(".//*[@id='UIConfirmation']//*[@class='btn' and text()=' Yes ']");
 	
 	public final By ELEMENT_CALENDAR_DAY_VIEW = By.xpath(".//*[@class='btn-group containerMoreItem']//*[text()='Day']");
 	public final By ELEMENT_CALENDAR_WEEK_VIEW = By.xpath(".//*[@class='btn-group containerMoreItem']//*[text()='Week']");
@@ -62,10 +66,12 @@ public class calendarBase {
 	public final By ELEMENT_BUTTON_EDIT_EVENT_IN_LISTVIEW=By.xpath(".//*[@class='uiActionContainer']//i[@class='uiIconEdit uiIconLightGray']");
 	public final String ELEMENT_CHECK_CATEGORY_EXIST_IN_EVENT=".//*[@id='UICalendarPopupWindow']//*[@class='control-group']//*[@class='selectbox' and @name='category']//*[text()='${name}']";
 	
-	public calendarBase(){
-		
-	}
+	protected static WebDriver driver;
 	
+	public calendarBase(WebDriver driver){
+		calendarBase.driver = driver;
+	}
+
 	public void goToCalendarPage(){
 		driver.findElement(ELEMENT_GO_TO_CALENDAR_PAGE).click();
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
@@ -75,9 +81,10 @@ public class calendarBase {
 		// Add a categorie in the calendar 
 		driver.findElement(ELEMENT_CALENDAR_BUTTONPLUS).click();
 		driver.findElement(ELEMENT_CALENDAR_BUTTONPLUS_ADD_EVENT_CATEGORIES).click();
-		driver.findElement(FIELD_CALENDAR_NAME_NEW_CATEGORIE).sendKeys(nameCategorie);	
+		driver.findElement(FIELD_CALENDAR_NAME_NEW_CATEGORIE).sendKeys(nameCategorie);
+		driver.manage().timeouts().implicitlyWait(45, TimeUnit.SECONDS);
 		driver.findElement(ELEMENT_CALENDAR_ADD_CATEGORIE_NAME).click();
-		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(45, TimeUnit.SECONDS);
 		driver.findElement(ELEMENT_CALENDAR_CLOSE_EVENT_CATEGORIE).click();	
 		driver.navigate().refresh();
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
@@ -94,6 +101,16 @@ public class calendarBase {
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 	    driver.findElement(ELEMENT_EVENT_SAVE_POPUP).click();
 	    driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);		
+	}
+	
+	public void deleteEvents(String eventName){
+		WebElement elementToRightClick1 = driver.findElement(By.xpath(ELEMENT_CALENDAR_TASK_OR_EVENT.replace("${name}", eventName)));
+		Actions action1 = new Actions(driver);
+		action1.contextClick(elementToRightClick1);
+		action1.perform();
+		driver.findElement(ELEMENT_DELETE_RIGHTCLIKC_EVENT_INCALENDAR).click();
+		driver.findElement(ELEMENT_CONFIRM_DELETE_POPUP_RIGHT_CLICK).click();
+		driver.manage().timeouts().implicitlyWait(45, TimeUnit.SECONDS);
 	}
 	
 	public void addTasks(String taskName, String nameCategorie){

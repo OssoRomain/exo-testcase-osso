@@ -1,14 +1,14 @@
 package MyPackage;
 import org.openqa.selenium.*;
 
-public class Log {
+public class MyLog {
 	
 	private String Url = null;
 	private String pass = null;
 	private String user = null;
 	private WebDriver driver= null;
 	
-	public Log (WebDriver driver,String Url){
+	public MyLog (WebDriver driver,String Url){
 		this.Url = Url;
 		this.driver = driver;
 		driver.get(Url);

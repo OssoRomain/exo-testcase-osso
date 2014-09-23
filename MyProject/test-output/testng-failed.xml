@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Default suite]">
+  <test name="Default test(failed)">
+    <classes>
+      <class name="MyPackage.calendar_test">
+        <methods>
+          <include name="initialize"/>
+          <include name="calendar_test_delete_event_category"/>
+          <include name="view_a_specific_event_in_List_view"/>
+          <include name="edit_category_with_valid_value"/>
+        </methods>
+      </class> <!-- MyPackage.calendar_test -->
+    </classes>
+  </test> <!-- Default test(failed) -->
+</suite> <!-- Failed suite [Default suite] -->

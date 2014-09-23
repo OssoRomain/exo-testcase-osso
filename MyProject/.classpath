@@ -42,5 +42,7 @@
 	<classpathentry kind="lib" path="/home/rosso/Downloads/selenium-2.42.2/selenium-java-2.42.2.jar"/>
 	<classpathentry kind="lib" path="/home/rosso/Downloads/selenium-2.42.2/selenium-java-2.42.2-srcs.jar"/>
 	<classpathentry kind="lib" path="/home/rosso/Desktop/chromedriver_linux64.zip"/>
+	<classpathentry kind="con" path="org.testng.TESTNG_CONTAINER"/>
+	<classpathentry kind="lib" path="/home/rosso/workspace/log4j-1.2.15.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
